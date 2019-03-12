@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.album_list.AlbumListActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.Toolbar"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:title="@string/app_name"
+            app:titleTextAppearance="@style/AppTheme.Toolbar.Title">
+
+            <android.support.v7.widget.SearchView
+                android:id="@+id/searchView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:maxWidth="1000dp"
+                android:theme="@style/AppTheme.SearchView"
+                app:iconifiedByDefault="true"
+                app:queryHint="@string/menu_search"
+                app:searchHintIcon="@null" />
+        </android.support.v7.widget.Toolbar>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-7dp"
+            android:layout_marginBottom="-7dp"
+            android:indeterminate="true"
+            android:visibility="gone" />
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvAlbums"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+</android.support.design.widget.CoordinatorLayout>

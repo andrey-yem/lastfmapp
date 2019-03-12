@@ -1,0 +1,104 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.example.andrey.lastfmapp"
+        minSdkVersion 23
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        debug {
+            testCoverageEnabled true
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+androidExtensions {
+    experimental = true
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    // Glide
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    kapt "com.github.bumptech.glide:compiler:$glide_version"
+
+    // retrofit + gson
+    compile "com.squareup.okhttp3:okhttp:$okhttp3_version"
+    compile "com.squareup.okhttp3:logging-interceptor:$okhttp3_version"
+    compile("com.squareup.retrofit2:retrofit:$retrofit_version") {
+        exclude module: 'okhttp'
+    }
+    compile "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    compile "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+
+    // rx
+    compile "io.reactivex.rxjava2:rxjava:$rxjava2_version"
+    compile "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
+
+    // dependency injection
+    implementation "com.google.dagger:dagger:$dagger2_version"
+    implementation "com.google.dagger:dagger-android:$dagger2_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger2_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger2_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger2_version"
+    annotationProcessor "com.google.dagger:dagger-compiler:$dagger2_version"
+    compileOnly 'javax.annotation:jsr250-api:1.0'
+    implementation 'javax.inject:javax.inject:1'
+
+    // ui
+    implementation "com.android.support:appcompat-v7:$support_version"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation "com.android.support:recyclerview-v7:$support_version"
+    implementation "com.android.support:cardview-v7:$support_version"
+    implementation "com.android.support:design:$support_version"
+
+    // test
+    testImplementation "junit:junit:$junit_version"
+    testImplementation "org.mockito:mockito-core:$mockito_version"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin_version"
+    testImplementation "com.flextrade.jfixture:jfixture:$jfixture_version"
+    testImplementation "pl.pragmatists:JUnitParams:$junitparams_version"
+    testImplementation "org.hamcrest:hamcrest-all:$hamcrest_version"
+    testImplementation("com.shazam:shazamcrest:$shazamcrest_version") {
+        // Exclude GSON to prevent overriding the version in :core:impl so tests and production uses the same
+        exclude module: 'gson'
+        // Need to be globally excluded to prevent from polluting other modules:
+        // WARNING: Dependency org.json:json:20090211 is ignored for debugAndroidTest
+        // as it may be conflicting with the internal version provided by Android.
+        // ... but will need to be re-added in consumers to be able to JUnit on desktop:
+        // testImplementation "org.json:json:${json_version_for_test}"
+        exclude group: 'org.json'
+    }
+    androidTestImplementation "com.flextrade.jfixture:jfixture:$jfixture_version"
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    androidTestImplementation("com.android.support.test.espresso:espresso-core:$espresso_version") {
+        exclude group: 'com.android.support'
+    }
+    androidTestImplementation("com.android.support.test.espresso:espresso-contrib:$espresso_version") {
+        exclude group: 'com.android.support'
+    }
+    androidTestImplementation("com.android.support.test.espresso:espresso-intents:$espresso_version") {
+        exclude group: 'com.android.support'
+    }
+
+    androidTestImplementation "com.android.support:support-annotations:$support_version"
+    androidTestImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin_version"
+    androidTestImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+    androidTestImplementation 'com.linkedin.dexmaker:dexmaker-mockito:2.21.0'
+    kaptAndroidTest "com.google.dagger:dagger-compiler:$dagger2_version"
+}
